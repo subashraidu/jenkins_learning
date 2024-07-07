@@ -1,8 +1,41 @@
-# jenkins_learning
+# jenkins
 
-+ Jenkins is an open source automation server. That facilitates the continuous integration and continuous delivery (CI/CD) of software development projects. It allows developers to automate the building, testing, and deployment of their code, making the development process more efficient and reliable. Jenkins can integrate with various version control systems, such as Git, and supports a wide range of plugins to extend its functionality. It's widely used in software development teams to automate repetitive tasks and streamline the development pipeline It is a server-based system that runs in servlet containers such as Apache Tomcat. Programming language: Java
+# What is jenkins
+
++ Jenkins is an open source automation server. That facilitates the continuous integration and continuous delivery (CI/CD) of software development projects. It allows developers to automate the building, testing, and deployment of their code, making the development process more efficient and reliable. Jenkins can integrate with various version control systems, such as Git, and supports a wide range of plugins to extend its functionality. It's widely used in software development teams to automate repetitive tasks and streamline the development pipeline It is a server-based system that runs in servlet containers such as Apache Tomcat (A servlet is a Java program that runs on a web server and handles client requests to generate dynamic web content.). Programming language: Java
   
 + Jenkins can be installed through native system packages, Docker, or even run standalone by any machine with a Java Runtime Environment (JRE) installed.
+
+# jenkins architecture
+
+Jenkins has a modular architecture that allows it to be highly extensible and customizable according to various automation needs in software development. Here's an overview of its architecture:
+
+    # Master-Slave Architecture:
+
+    Master: The Jenkins master is the central server that coordinates and manages the build process. It schedules jobs, monitors agents (slaves), and provides the web interface for users to interact with Jenkins.
+    Agent (Slave): Jenkins agents (also known as slaves) are worker nodes that execute build jobs dispatched by the master. Agents can be set up on different operating systems and environments to execute builds in parallel.
+
+    # Build Jobs:
+
+    Jenkins operates based on jobs or tasks known as "build jobs". These jobs define what Jenkins should do, such as fetching source code from a repository, compiling code, running tests, and deploying applications.
+    Jobs are configured via a web interface or by defining Jenkinsfiles (using Jenkins Pipeline), which are stored in version control systems.
+
+    # Plugins:
+
+    Jenkins functionality can be extended through plugins. Plugins integrate Jenkins with various tools and services for source code management, build automation, testing, deployment, monitoring, and more.
+    There are thousands of plugins available in the Jenkins plugin ecosystem, allowing users to customize Jenkins to fit their specific needs.
+
+    # Web Interface:
+
+    Jenkins provides a user-friendly web interface that allows users to create, configure, and monitor build jobs. Users can view build logs, manage plugins, set up credentials, and view reports and statistics.
+
+    # Distributed Builds:
+
+    Jenkins supports distributed builds, where different build jobs can be executed on different agents simultaneously. This helps in scaling Jenkins for large projects and optimizing build times.
+
+    
+
+
 
 + Jenkins and its main feature ---> Jenkins Pipeline.
   
