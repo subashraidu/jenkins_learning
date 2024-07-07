@@ -53,54 +53,61 @@ Jenkins has a modular architecture that allows it to be highly extensible and cu
     Permanent agents are long-lived agents that remain registered with Jenkins indefinitely, available for any job execution. They are typically used for stable environments where consistent availability is required.
     Temporary agents are short-lived agents that Jenkins spawns for specific jobs and releases afterward. They are useful for optimizing resource utilization and scaling based on workload demands.
 
+# Build types in jenkins.
+
+n Jenkins, "build types" generally refer to the different kinds of builds or jobs that can be configured and executed within the Jenkins environment. These build types define the actions Jenkins will perform when a job is triggered, such as compiling code, running tests, packaging artifacts, and deploying applications. Here are some common build types you can define in Jenkins:
+
+      # Freestyle Project:
+        A Freestyle project is the simplest form of Jenkins job. It allows you to configure a series of build steps, which can include shell scripts, batch commands, or other build actions. You have flexibility in defining the sequence and execution of these build steps.
+
+       # Pipeline:
+        Jenkins Pipeline is a suite of plugins that supports continuous delivery and automation of tasks in Jenkins. Pipelines can be defined using a DSL (Domain-Specific Language) called Groovy, either in a Jenkinsfile stored within your version control system or directly in the Jenkins UI. Pipelines offer robust capabilities for defining complex workflows, including parallel execution, stages, and advanced conditions.
+
+       # Multi-configuration Project:
+        Also known as Matrix projects, these allow you to run the same build job on multiple configurations (such as different operating systems, JDK versions, or browser types) in parallel. It's useful for testing software across different environments simultaneously.
+
+       # GitHub Organization:
+        This build type allows Jenkins to automatically create and configure jobs for repositories within a GitHub organization or GitHub Enterprise. It scans GitHub repositories and creates jobs based on predefined templates or configurations.
+
+       # GitHub Pull Request Builder:
+        This type of build job is triggered automatically when pull requests are opened or updated on GitHub repositories. Jenkins checks out the pull request, builds it, and reports back the status (success, failure, etc.) on GitHub.
+
+       # Maven Project:
+        Jenkins provides specific support for Maven-based projects. Maven projects automatically manage dependencies, perform builds according to Maven lifecycle phases (like compile, test, package), and can publish artifacts to Maven repositories.
+
+       # Freestyle Maven Project:
+        Similar to a standard Freestyle project but specifically configured to build Maven-based projects. It integrates Maven commands directly into the build steps.
+
+       # Pipeline (Multibranch):
+        This type of pipeline job automatically creates a new Jenkins Pipeline job for each branch in a repository. It scans branches and applies the Pipeline configuration defined in the Jenkinsfile within each branch.The definition of a Jenkins Pipeline is written into a text file (called a Jenkinsfile) which in turn can be committed to a project’s source control repository. This is the foundation of "Pipeline-as-code"; treating the CD pipeline as a part of the application to be versioned and reviewed like any other code.
+
+        
+These are some of the common build types available in Jenkins, each tailored to different use cases and project requirements. Jenkins' flexibility and extensive plugin ecosystem allow users to customize and extend these build types to suit specific automation needs in software development and deployment pipelines.
+
+# Different types of syntaxes in Jenkins.
+
+In Jenkins, when writing configurations for jobs or pipelines, you primarily work with two syntaxes: Declarative Pipeline Syntax and Scripted Pipeline Syntax (also known as Scripted Pipeline DSL). 
+
+    # Declarative Pipeline Syntax
+
+Declarative Pipeline Syntax is a more structured and opinionated way of defining Jenkins Pipelines. It provides a simpler and more limited syntax but aims to be easier to read and write for straightforward use cases. 
+
+    # Scripted Pipeline Syntax
+
+Scripted Pipeline Syntax provides more flexibility and is based on Groovy scripting language. It allows you to write entire Pipelines as code, with full access to Jenkins' Pipeline API and any Groovy syntax or libraries. 
+
+     # Key Syntax Elements
+
+    Pipeline Block: Defines the entire pipeline structure.
+    Agent: Specifies where the pipeline will execute.
+    Stages: Divides the pipeline into stages (e.g., build, test, deploy).
+    Steps: Actions to be executed within each stage (e.g., shell commands).
+    Environment: Sets environment variables for the pipeline.
+    Post: Defines actions to be taken after stages (e.g., notifications).
+    Triggers: Specifies conditions or schedules to trigger the pipeline.
+    Options: Configures pipeline options (e.g., timeout, retry).
+
+These syntaxes provide powerful ways to define automation workflows in Jenkins, allowing developers and teams to automate build, test, and deployment processes effectively. The choice between Declarative and Scripted Pipeline syntax often depends on the complexity and flexibility required by your specific CI/CD pipeline.
 
 
 
-+ Jenkins and its main feature ---> Jenkins Pipeline.
-  
-+ Jenkins Pipeline (or simply "Pipeline" with a capital "P") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins.
-
-+ A continuous delivery (CD) pipeline is an automated expression of your process for getting software from version control right through to your users and customers. Every change to your software (committed in source control) goes through a complex process on its way to being released. This process involves building the software in a reliable and repeatable manner, as well as progressing the built software (called a "build") through multiple stages of testing and deployment.
-
-+ Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code" via the Pipeline domain-specific language (DSL) syntax.
-
-+ The definition of a Jenkins Pipeline is written into a text file (called a Jenkinsfile) which in turn can be committed to a project’s source control repository. [2] This is the foundation of "Pipeline-as-code"; treating the CD pipeline as a part of the application to be versioned and reviewed like any other code.
-
-+Creating a Jenkinsfile and committing it to source control provides a number of immediate benefits:
-
-Automatically creates a Pipeline build process for all branches and pull requests.
-
-Code review/iteration on the Pipeline (along with the remaining source code).
-
-Audit trail for the Pipeline.
-
-Single source of truth [3] for the Pipeline, which can be viewed and edited by multiple members of the project.
-
-While the syntax for defining a Pipeline, either in the web UI or with a Jenkinsfile is the same, it is generally considered best practice to define the Pipeline in a Jenkinsfile and check that in to source control.
-
-+ A Jenkinsfile can be written using two types of syntax — Declarative and Scripted.
-
-Declarative and Scripted Pipelines are constructed fundamentally differently. Declarative Pipeline is a more recent feature of Jenkins Pipeline which:
-
-provides richer syntactical features over Scripted Pipeline syntax, and
-
-is designed to make writing and reading Pipeline code easier.
-
-Many of the individual syntactical components (or "steps") written into a Jenkinsfile, however, are common to both Declarative and Scripted Pipeline.
-
-
-+ Jenkins is, fundamentally, an automation engine which supports a number of automation patterns. Pipeline adds a powerful set of automation tools onto Jenkins, supporting use cases that span from simple continuous integration to comprehensive CD pipelines. By modeling a series of related tasks, users can take advantage of the many features of Pipeline:
-
-Code: Pipelines are implemented in code and typically checked into source control, giving teams the ability to edit, review, and iterate upon their delivery pipeline.
-
-Durable: Pipelines can survive both planned and unplanned restarts of the Jenkins controller.
-
-Pausable: Pipelines can optionally stop and wait for human input or approval before continuing the Pipeline run.
-
-Versatile: Pipelines support complex real-world CD requirements, including the ability to fork/join, loop, and perform work in parallel.
-
-Extensible: The Pipeline plugin supports custom extensions to its DSL [1] and multiple options for integration with other plugins.
-
-While Jenkins has always allowed rudimentary forms of chaining Freestyle Jobs together to perform sequential tasks, [4] Pipeline makes this concept a first-class citizen in Jenkins.
-
-+ 
