@@ -35,6 +35,25 @@ Jenkins has a modular architecture that allows it to be highly extensible and cu
 
     
 
+# Diffenet types of Jenkins agent.
+
+ In Jenkins, agents (also known as slaves) are worker nodes that execute build jobs dispatched by the master server. Agents can be configured to run on different operating systems, environments, or hardware configurations to accommodate diverse build and test requirements. Here are different types of agents in Jenkins:
+
+    # Static Agents:
+    
+        Static agents are traditional Jenkins agents that are configured and permanently registered with the Jenkins master. They typically run on dedicated hardware or virtual machines (VMs) and are always available to execute build jobs.
+
+    # Dynamic Agents:
+    
+        Dynamic agents are provisioned on-demand by Jenkins to handle workload spikes or specific job requirements. Jenkins can dynamically spin up instances of these agents in cloud environments (like AWS, Azure, Google Cloud) using plugins such as Amazon EC2 Plugin, Azure VM Agents Plugin, or Google Compute Engine Plugin.
+
+
+    # Permanent vs. Temporary Agents:
+
+    Permanent agents are long-lived agents that remain registered with Jenkins indefinitely, available for any job execution. They are typically used for stable environments where consistent availability is required.
+    Temporary agents are short-lived agents that Jenkins spawns for specific jobs and releases afterward. They are useful for optimizing resource utilization and scaling based on workload demands.
+
+
 
 
 + Jenkins and its main feature ---> Jenkins Pipeline.
