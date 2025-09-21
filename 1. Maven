@@ -1,0 +1,113 @@
+What is Maven?
+Maven is a build automation and dependency management tool for Java projects.
+It standardizes how Java projects are built, tested, and packaged (e.g., into JAR/WAR).
+It uses a configuration file called pom.xml (Project Object Model).
+
+1. Basic Maven Lifecycle
+Maven defines a standard build lifecycle with phases. You’ll often see these in Jenkins pipelines.
+Common phases:
+validate → check if project is correct
+compile → compile the source code
+test → run unit tests
+package → create JAR/WAR
+verify → run integration tests
+install → put artifact into local repository (~/.m2)
+deploy → upload to remote repo (Nexus, Artifactory, etc.)
+
+2. Maven Commands You’ll Use in Jenkins
+mvn clean → deletes old builds (target/)
+mvn compile → compiles Java code
+mvn test → runs unit tests (JUnit, TestNG)
+mvn package → builds JAR/WAR
+mvn install → puts artifact into local Maven repo
+mvn deploy → pushes artifact to Nexus/Artifactory
+mvn dependency:tree → shows dependency conflicts (super important for debugging like your protobuf issue)
+
+3. Maven Repositories
+Local repo → ~/.m2/repository/
+Central repo → Maven Central (default public repo)
+Remote repo → Company-hosted artifact repo (e.g., Nexus, JFrog Artifactory)
+
+4. Maven Plugins
+Maven uses plugins to extend functionality. Common ones in CI/CD:
+maven-compiler-plugin → compiles Java code
+maven-surefire-plugin → runs unit tests
+maven-failsafe-plugin → runs integration tests
+maven-deploy-plugin → uploads artifacts to repo
+maven-assembly-plugin / shade plugin → build fat/uber JARs
+
+5. Understanding pom.xml
+The heart of a Maven project. Key sections:
+<groupId>, <artifactId>, <version> → defines the artifact coordinates
+<dependencies> → external libraries your app needs
+<build> → plugins and build settings
+<repositories> → remote repos
+<profiles> → custom build configs (e.g., dev/prod)
+
+Example:
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>myapp</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.2.0</version>
+    </dependency>
+  </dependencies>
+</project>
+
+6. Maven in Jenkins Pipelines
+In freestyle jobs:
+Use "Invoke top-level Maven targets" build step.
+Example Goal: clean install -DskipTests.
+In Pipeline (Jenkinsfile):
+pipeline {
+  agent any
+  tools {
+    maven 'Maven-3.9.6'  // defined in Jenkins global tools
+    jdk 'JDK-17'
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean package -DskipTests'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'mvn test'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'mvn deploy'
+      }
+    }
+  }
+}
+
+
+7. Common DevOps Problems with Maven
+Dependency conflicts → use mvn dependency:tree to debug
+Snapshot vs Release versions → SNAPSHOT = dev builds, Release = stable
+Caching issues in Jenkins agents → clear ~/.m2 if builds act weird
+Artifact repo credentials → stored in ~/.m2/settings.xml or Jenkins credentials
+Example settings.xml for Nexus:
+<servers>
+  <server>
+    <id>nexus-repo</id>
+    <username>jenkins</username>
+    <password>${env.NEXUS_PASSWORD}</password>
+  </server>
+</servers>
+
+8. Integration with Other Tools
+SonarQube → mvn sonar:sonar for code quality
+JaCoCo → code coverage reports
+Docker → build image after Maven package
+Helm/K8s → deploy Maven-built artifacts
