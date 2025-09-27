@@ -1,0 +1,41 @@
+pipeline{
+    // all the code will be written here
+agent{
+    // server where we have to run the pipeline
+    // it is a mandatory section
+}
+tools{
+    // we configure tools in the jenkins --tools section
+    // write names of the tools that jenkins require to run the pipeline
+    // tools are not mandatory
+}
+environment{
+    // to add environment variables
+}
+parameters{
+    // add parameters that are to be used in the pipeline
+}
+triggers{
+    // add trigger for automated execution
+}
+stages{
+stage('job1'){
+    steps{
+        many commands to execute
+    }
+}
+stage('job2'){
+    steps{
+        many commands to execute
+    }
+    post{
+
+    }
+}
+stage('job3'){
+    steps{
+        many commands to execute
+    }
+}
+}
+}
