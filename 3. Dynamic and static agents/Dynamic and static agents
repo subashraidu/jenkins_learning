@@ -1,0 +1,37 @@
+# Static Agents
+
+Definition: Long-running Jenkins nodes (servers/VMs) that are always connected to the Jenkins master/controller.
+Setup: Installed once and permanently configured as a Jenkins node.
+
+Characteristics:
+Always available (even if no jobs are running).
+Usually a fixed VM, bare-metal server, or container that is manually managed.
+Requires Jenkins admin to maintain OS, dependencies, and security patches.
+Wastes resources if idle.
+
+Use Cases:
+When builds need consistent environments.
+For jobs with long-running, stable workloads.
+Small teams with predictable build frequency.
+
+Example: A dedicated Linux VM with Maven/Java installed, always ready to build Java apps.
+
+
+
+# Dynamic Agents
+
+Definition: Jenkins agents that are provisioned on-demand (spawned only when a job is triggered, then destroyed after completion).
+Setup: Usually integrated with cloud providers (AWS, GCP, Azure) or container orchestrators (Kubernetes, Docker).
+
+Characteristics:
+Ephemeral – created per build and terminated afterward.
+Saves costs because resources exist only when needed.
+Ensures clean, isolated environments (reduces dependency conflicts).
+Scales automatically with workload.
+
+Use Cases:
+Cloud-native CI/CD pipelines.
+Large teams with bursty workloads.
+Projects needing different environments per build.
+
+ Example: Jenkins on Kubernetes using the Kubernetes plugin – when a job runs, Jenkins spins up a new pod as an agent, runs the build, then deletes the pod.
